@@ -11,6 +11,15 @@ Game::Game()
 	normalImage = LoadGraph("image/obake.png");
 	hitImage = LoadGraph("image/bomb.png");
 
+	//音ファイルの読み込み
+	bgm = LoadSoundMem("Sound/obake_bgm.mp3");
+	hitSound = LoadSoundMem("Sound/Punching_Sound.mp3");
+	clearSound = LoadSoundMem("Sound/omedetou.mp3");
+
+	// 【追加】BGMをループ再生（ずーっと鳴らし続ける）する！
+	// DX_PLAYTYPE_LOOP を指定すると、曲が終わっても自動で最初から再生してくれるで
+	PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
+
 	//最初はステージ1から
 	stage = 1;
 
@@ -112,6 +121,10 @@ void Game::Update(float dt, int mx, int my, bool click)
 				//i番目のお化けを倒された状態に
 				ghostState[i] = 2;
 
+				//お化けに当たった瞬間ヒット音を鳴らす
+				// DX_PLAYTYPE_BACK を指定すると、裏で一瞬だけ「ポンッ」と鳴らして終わる（効果音向き）
+				PlaySoundMem(hitSound, DX_PLAYTYPE_BACK);
+
 				//１クリックにつき１匹なためここでチェックを切り上げ
 				break;
 			}
@@ -133,9 +146,21 @@ void Game::Update(float dt, int mx, int my, bool click)
 	{
 		stage++; // ステージ番号を1個進める
 
-		if (stage <= 10)StartStage(); // 次のステージの準備をする（お化けが増えて復活）
+		if (stage <= 10)
+		{
+			StartStage(); // 次のステージの準備をする（お化けが増えて復活）
+		}
+		else
+		{
+			//全クリフラグ
+			isGameClear = true;
 
-		else isGameClear = true;//全クリフラグをON
+			//全クリでBGMを止める
+			StopSoundMem(bgm);
+
+			//全クリ用効果音を鳴らす
+			PlaySoundMem(clearSound, DX_PLAYTYPE_BACK);
+		}
 	}
 }
 
