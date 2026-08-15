@@ -1,55 +1,175 @@
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
+#include<iostream>
+#include<cstdlib>
+#include<ctime>
 
 using namespace std;
 
-int main()
+int main(void)
 {
-    int answer = -1;
-    int question;
-    int count = 0;
+	//íËêî
+	const int DISE = 6;
+	const int DISE_ROLL = 2;
+	const int FIELD = 9;
 
-    srand((unsigned int)time(nullptr));
+	//ïœêî
+	int i;
+	int plDise[DISE_ROLL] = {};
+	int enDise[DISE_ROLL] = {};
+	int plSum = 0;
+	int enSum = 0;
+	int plSelect = 0;
+	int enSelect = 0;
+	int Field[FIELD] = {};
+	int ClearCheck = 0;
 
-    question = rand() % 101;
+	bool trunFlag = true;
+	bool judgementFlag = false;
 
-    cout << "Êï∞Â≠óÂΩì„Å¶„Ç≤„Éº„É†" << endl;
-    cout << "0ÔΩû100„Åæ„Åß„ÅÆÊï∞Â≠ó„ÇíÂΩì„Å¶„Å¶„Åè„Å†„Åï„ÅÑ„ÄÇ" << endl;
+	//óêêîèâä˙âª
+	srand((unsigned int)time(NULL));
 
-    while (question != answer)
-    {
-        count++;
+	cout << "===================   Jackpot   ============================" << "\n";
+	cout << "CPUÇ∆ÉvÉåÉCÉÑÅ[Ç™åå›Ç…ÇQÇ¬ÇÃòZñ ÉTÉCÉRÉçÇêUÇËÅA1Ç©ÇÁ9Ç‹Ç≈ÇÃÉ}ÉXÇêwéÊÇËÇ∑ÇÈÉQÅ[ÉÄÇ≈Ç∑ÅB" << "\n";
+	cout << "===================   GAME STRAT   ============================" << "\n";
 
-        while (true)
-        {
-            cout << "0ÔΩû100„ÅÆÊï∞Â≠ó„ÇíÂÖ•Âäõ„Åó„Å¶„Åè„Å†„Åï„ÅÑÔºö" << endl;
-            cin >> answer;
+	while (true)
+	{
 
-            if (answer < 0 || answer > 100)
-            {
-                cout << "ÂÖ•Âäõ„Å´Ë™§„Çä„Åå„ÅÇ„Çä„Åæ„Åô„ÄÇÂÜçÂÖ•Âäõ„Åó„Å¶„Åè„Å†„Åï„ÅÑ„ÄÇ" << endl;
-            }
-            else
-            {
-                break;
-            }
-        }
+		if (trunFlag)
+		{
+			cout << "PLAYER TRUN \n";
 
-        if (question > answer)
-        {
-            cout << "„ÇÇ„Å£„Å®Â§ß„Åç„ÅÑÊï∞Â≠ó„Åß„Åô„ÄÇ" << endl;
-        }
-        else if (question < answer)
-        {
-            cout << "„ÇÇ„Å£„Å®Â∞è„Åï„ÅÑÊï∞Â≠ó„Åß„Åô„ÄÇ" << endl;
-        }
-    }
+			for (i = 0; i < DISE_ROLL; i++)
+			{
 
-    cout << endl;
-    cout << "„Åä„ÇÅ„Åß„Å®„ÅÜ„Åî„Åñ„ÅÑ„Åæ„ÅôÔºÅÊ≠£Ëß£„Åß„ÅôÔºÅ" << endl;
-    cout << "Ê≠£Ëß£Ôºö" << answer << endl;
-    cout << count << "ÂõûÁõÆ„ÅßÂΩì„Å¶„Çã„Åì„Å®„Åå„Åß„Åç„Åæ„Åó„Åü„ÄÇ" << endl;
+				plDise[i] = rand() % 6 + 1;
 
-    return 0;
+				plSum += plDise[i];
+			}
+
+			cout << "éüÇÃÇRÇ¬ÇÃÉ}ÉXÇ©ÇÁéÊÇÈÉ}ÉXÇëIÇÒÇ≈Ç≠ÇæÇ≥Ç¢ÅBÇ∑Ç≈Ç…éÊÇÁÇÍÇƒÇ¢ÇÈÉ}ÉXÇÕéÊÇÍÇ‹ÇπÇÒ \n" << endl;
+			cout << plDise[0] << " , " << plDise[1] << " , " << plSum << "\n";
+
+			while (true)
+			{
+				cin >> plSelect;
+
+				if (plSelect == plDise[0] || plSelect == plDise[1] || plSelect == plSum)
+				{
+					break;
+				}
+				else
+				{
+					cout << "ì¸óÕÇ…åÎÇËÇ™Ç†ÇËÇ‹Ç∑ÅBçƒìxì¸óÕÇµÇƒÇ≠ÇæÇ≥Ç¢ÅB\n";
+				}
+
+			}
+
+			if (Field[plSelect] == 0)
+			{
+
+				Field[plSelect] = 1;
+
+				ClearCheck++;
+
+			}
+
+			cout << "åªç›ÇÃÉ}ÉXÇÃèÛãµÇÕÇ±ÇøÇÁÇ≈Ç∑" << endl;
+
+			for (i = 0; i < FIELD; i++)
+			{
+				cout << Field[i];
+				cout << " , ";
+			}
+
+			cout << "\n";
+
+			if (ClearCheck >= 9)
+			{
+				cout << "ëSÇƒÇÃÉ}ÉXÇ™ñÑÇ‹Ç¡ÇΩÇΩÇﬂÉQÅ[ÉÄÇèIóπÇµÇ‹Ç∑\n";
+				judgementFlag = true;
+				break;
+			}
+
+			cout << "\n";
+			trunFlag = false;
+		}
+		else
+		{
+			cout << "ENEMY TRUN \n";
+
+			for (i = 0; i < DISE_ROLL; i++)
+			{
+				enDise[i] = rand() % 6 + 1;
+
+				enSum += enDise[i];
+			}
+
+			enSelect = rand() % 3;
+
+			switch(enSelect)
+			{
+			case 0:
+				if (Field[enDise[0]] == 0)
+				{
+					Field[enDise[0]] = 2;
+
+					ClearCheck++;
+
+				}
+				break;
+
+			case 1:
+				if (Field[enDise[1]] == 0)
+				{
+					Field[enDise[1]] = 2;
+
+					ClearCheck++;
+
+				}
+				break;
+
+			case 2:
+				if (Field[enSum] == 0)
+				{
+					Field[enSum] = 2;
+
+					ClearCheck++;
+
+				}
+				break;
+			}
+
+			cout << "åªç›ÇÃÉ}ÉXÇÃèÛãµÇÕÇ±ÇøÇÁÇ≈Ç∑" << endl;
+
+			for (i = 0; i < FIELD; i++)
+			{
+				cout << Field[i];
+				cout << " , ";
+			}
+
+			if (ClearCheck >= 9)
+			{
+				cout << "ëSÇƒÇÃÉ}ÉXÇ™ñÑÇ‹Ç¡ÇΩÇΩÇﬂÉQÅ[ÉÄÇèIóπÇµÇ‹Ç∑\n";
+				judgementFlag = false;
+				break;
+			}
+
+			cout << "\n";
+			trunFlag = true;
+		}
+
+
+	}
+
+	if (judgementFlag)
+	{
+		cout << "PLAYER WINNER\n";
+	}
+	else
+	{
+		cout << "ENEMY WINNER\n";
+	}
+
+	return 0;
 }
